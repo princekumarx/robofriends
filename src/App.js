@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React ,{Component} from 'react';
+import CardList from './card/Cardlist';
+ import SearchBox from './Searchbox';
 import './App.css';
+import {robots} from './robots';
+import 'tachyons';
+// import { rootCertificates } from 'tls';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ 
+
+class App  extends Component {
+
+constructor(){
+    super()
+    this.state = {
+        robots: robots,
+        searchfield:'',
+    
+    }
+}
+
+Holdup = (e) =>{
+   this.setState({
+       searchfield: e.target.value
+   });
+
+   
+
+ }
+
+    render(){
+        const filteredRobots = this.state.robots.filter((search) => {
+            return search.name.toLocaleLowerCase().includes(this.state.searchfield.toLocaleLowerCase());
+        })
+        return (
+            <div className="t">
+                <h1 className="f2  ">RoboFriends</h1>
+    
+                <SearchBox holdup={this.Holdup} />
+    
+            <CardList   robots={filteredRobots } />
+    
+            </div>
+        );
+        }
+    
 }
 
 export default App;
